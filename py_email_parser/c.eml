@@ -1,0 +1,528 @@
+Delivered-To: ghostyak@gmail.com
+Received: by 2002:a17:906:304c:b0:a51:ce66:cf15 with SMTP id d12csp312436ejd;
+        Thu, 11 Apr 2024 18:16:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFlZJ+8HcQtx5rtIREE+e+bu3UeNSYhz/BGoz2omZmYwj291YsSafwlHA1b+MtF436Kbx8h
+X-Received: by 2002:a05:6808:f86:b0:3c6:efdd:472 with SMTP id o6-20020a0568080f8600b003c6efdd0472mr1523876oiw.0.1712884573450;
+        Thu, 11 Apr 2024 18:16:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1712884573; cv=none;
+        d=google.com; s=arc-20160816;
+        b=OgmBVjJVZUZNDKMq0/K5x3bbZ6wE7BJr5g2Y9YjWnd/nXTJiuBrvpMBSwYZFlVlscH
+         +GFPOUKJCHjB3A2r+3JufgXzd2UVRZIgT0jNV8g+Hxo5evPmqFTq8oROZyiMk9odd+gc
+         H1VnUdloyIasKCWrrVXPgzDkGf9IGIYFvhR6B4fXa6sv+tql9YasVURvCUFtL96fYr+c
+         D2wRZSryjQx2Tkg11HIzOkPTY3eGwi2IBeRnPNbL89ykiabtqw3pXsUQL8EPAwt+2Se0
+         RsTDE/pWImGotNpjAgk8iT9ifJtG/1PamsmeewblXpZAyL81YPq9iu2H9aHiBRVR3fQD
+         o0uA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:from:list-unsubscribe:subject:reply-to:mime-version
+         :date:message-id:to:dkim-signature;
+        bh=TU7NR0Bd2k9m3hiG6mM/tUx1+4B/eVA7cGsyFCsrvQQ=;
+        fh=yfnqgzGnrSCt3r6AIGzmonpmKRxPvO4+4NqHYyF+kT0=;
+        b=ooC8fvJLVcDsITajAfDXozG0TOJRPM00jIvPakBpToeR5J0VUHeJf4MMsacBA4Nc69
+         d4+9KNlSzEJ/rEHYUUDxNG7kHnzjENNEsWXD8N3YK99rAH8ljjndFMHfbDfJ8V3PinO6
+         rBfFJ6i1boMjo4KQYRGLg/voyNQoj/pL3Drb4YVjqIRZcNezgUOK8jBy8LE3qvlBMD27
+         F9A3o6lhhw7yGD0L/gtjvap5w6plMwXF6BGMk0YrFs8PbFoehNS9lG0aQ2JVhjtIgLqV
+         pxlGKiCv7RkSZymfRoUVci9qgSGsRVLc0wEG9qbu6dUVG7Bw408GJv3tXmCZb7nwHIxQ
+         LYuA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@team.mongodb.com header.s=scph0224 header.b=GCrUbLSf;
+       spf=pass (google.com: domain of msprvs1=198323v-yjnxo=bounces-280172-815@spmailtechnolo.com designates 156.70.47.101 as permitted sender) smtp.mailfrom="msprvs1=198323v-yjnxo=bounces-280172-815@spmailtechnolo.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=mongodb.com
+Return-Path: <msprvs1=198323v-yjnxo=bounces-280172-815@spmailtechnolo.com>
+Received: from mta-70-47-101.sparkpostmail.com (mta-70-47-101.sparkpostmail.com. [156.70.47.101])
+        by mx.google.com with ESMTPS id j23-20020a62b617000000b006ed89d1cc23si2260297pff.356.2024.04.11.18.16.13
+        for <ghostyak@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 Apr 2024 18:16:13 -0700 (PDT)
+Received-SPF: pass (google.com: domain of msprvs1=198323v-yjnxo=bounces-280172-815@spmailtechnolo.com designates 156.70.47.101 as permitted sender) client-ip=156.70.47.101;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@team.mongodb.com header.s=scph0224 header.b=GCrUbLSf;
+       spf=pass (google.com: domain of msprvs1=198323v-yjnxo=bounces-280172-815@spmailtechnolo.com designates 156.70.47.101 as permitted sender) smtp.mailfrom="msprvs1=198323v-yjnxo=bounces-280172-815@spmailtechnolo.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=mongodb.com
+X-MSFBL: V06lCObkcB2O/4YzVD2s5ZW3WQggOqdSrLqN1XzepBo=|eyJjdXN0b21lcl9pZCI
+	6IjI4MDE3MiIsIm1lc3NhZ2VfaWQiOiI2NjEwNWM4YjE4NjY4NzVlM2QyNyIsInR
+	lbmFudF9pZCI6InNwYyIsInIiOiJnaG9zdHlha0BnbWFpbC5jb20iLCJzdWJhY2N
+	vdW50X2lkIjoiODE1In0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=team.mongodb.com;
+	s=scph0224; t=1712884572; i=@team.mongodb.com;
+	bh=TU7NR0Bd2k9m3hiG6mM/tUx1+4B/eVA7cGsyFCsrvQQ=;
+	h=To:Message-ID:Date:Content-Type:Subject:List-Unsubscribe:From:
+	 From:To:Cc:Subject;
+	b=GCrUbLSf6O5AIJ2SDR1m5+CktcQCLOcXStQPiPnegN8u8FBUi/VNX+DRNAI9EUjuF
+	 JS+LYjEZpcjNstmbIdCJ6C8rv2/NXW/Uk6SNB9t4hXLJlClzPMD6ZZp59pglqtjhqH
+	 xrs08hFWDmhi6iyNWn52Gfa1poU/BxE1DIdKCaRo=
+To: =?utf-8?B?7JiB6riwIE4vQQ==?= <ghostyak@gmail.com>
+Message-ID: <72.D3.30557.C5B88166@jp.mta1vrest.cc.prd.sparkpost>
+Date: Fri, 12 Apr 2024 01:16:12 +0000
+Content-Type: multipart/alternative; boundary="_----VHWAU7ltLnzAp0KRzXxBnw===_52/D3-30557-C5B88166"
+MIME-Version: 1.0
+Reply-To: mongodbteam@mongodb.com
+Subject: =?utf-8?B?SGV5IOyYgeq4sCwgbGV0J3MgZ2V0IHN0YXJ0ZWQh?=
+X-Campaign-ID: 7715097
+List-Unsubscribe: <https://links.iterable.com/e/eh?_t=86ba93b39a0e415ea7cd8e8ed81051cd&_m=4a8ac7c017ae4e0d96cb7d39a92b22ad&_e=Govw8q_cs_lXNoYdbuzQyA-0eM-oifoPAAigYWJ0PIFnmiechn22o3kXmorb6kUyWnRaxFneKPihfrjVp8QswJp56JieqQnoAOCBR4b3N_pvQpy2Xse6ZrdxXm3Gmi3CYXkTVSRnlGfZrN8lLGD4_cjcPJ0QrhVCZXIo9CFez-Y%3D>,<mailto:unsubscribe+7715097+11786096@unsubscribe.iterable.com>
+From: "MongoDB" <mongodb@team.mongodb.com>
+X-Message-ID: 4a8ac7c017ae4e0d96cb7d39a92b22ad
+X-Feedback-ID: 11786096:7715097:58227:iterable
+Feedback-ID: 11786096:7715097:58227:iterable
+
+--_----VHWAU7ltLnzAp0KRzXxBnw===_52/D3-30557-C5B88166
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+
+Here are a few resources to help you get started. =0A=0A=0A=0A=0A=0A=0A=0AW=
+elcome to MongoDB=0A=0A=EC=98=81=EA=B8=B0=0A=0A=0A=0A=0AReady to dive into =
+MongoDB Atlas=3F Just complete these four steps and you'll =0Ahave your Mon=
+goDB cluster up and running.=0A=0A * Create cluster =0A<https://www.mongodb=
+.com/docs/atlas/tutorial/deploy-free-tier-cluster/>=0A * Add IP address to=
+ access list =0A<https://www.mongodb.com/docs/atlas/security/add-ip-address=
+-to-list/>=0A * Create a user =0A<https://www.mongodb.com/docs/atlas/tutori=
+al/create-mongodb-user-for-cluster/>=0A * Connect to cluster =0A<https://ww=
+w.mongodb.com/docs/atlas/tutorial/connect-to-your-cluster/>=0AReady to star=
+t building=3F Populate your newly-created cluster with some of our =0Asampl=
+e datasets. Great for testing and quick prototyping!=0A=0A=0A=0AGet started=
+ =0A<https://cloud.mongodb.com/go=3Fl=3Dhttps%3A%2F%2Fcloud.mongodb.com%2Fv=
+2%2F%3Cproject%3E&h=3Dclusters%2Fdetail%2F%3Ccluster%3E>=0A=0A=E2=80=8A=0A=
+=0AOr check out this 6 minute video where we'll guide you through your clus=
+ter =0Asetup.=0A=0A =0A<https://learn.mongodb.com/learn/course/getting-star=
+ted-with-mongodb-atlas/lesson-2-creating-and-deploying-an-atlas-cluster/lea=
+rn=3Fclient=3Dmongodb-internal&page=3D1>=0A=0A=0A=0A=E2=80=8A =0A=0AAdvanta=
+ges of the document model=0A=0A=0A=0AInstead of storing data in fixed rows =
+and columns, documents offer a variety =0Aof advantages, including:=0A=0A=
+=0A=0A * An intuitive data model that is fast and easy to work with.=0A * A=
+ flexible schema that allows for your data model to evolve as needs change.=
+=0A * The ability to horizontally scale out.=0A=0A=0ARead more <https://www=
+.mongodb.com/document-databases> =0A=0A=0A=0A=0A=0A=0A=0ACopyright =C2=A9 =
+2024 MongoDB, All rights reserved.=0A1633 Broadway Floor 38, New York, NY 1=
+0019=0Aview in browser =0A<https://links.iterable.com/e/evib=3F_t=3D86ba93b=
+39a0e415ea7cd8e8ed81051cd&_m=3D4a8ac7c017ae4e0d96cb7d39a92b22ad&_e=3D_jM0iw=
+dGzOU_IITk9RVliaHunK_sEXXtAbWCAdShNRjEVvGni92jRSyZkY9Ti3Rq>=0A orunsubscrib=
+e =0A<https://links.iterable.com/e/eh=3F_t=3D86ba93b39a0e415ea7cd8e8ed81051=
+cd&_m=3D4a8ac7c017ae4e0d96cb7d39a92b22ad&_e=3DGovw8q_cs_lXNoYdbuzQyA-0eM-oi=
+foPAAigYWJ0PIFnmiechn22o3kXmorb6kUyWnRaxFneKPihfrjVp8QswJp56JieqQnoAOCBR4b3=
+N_pvQpy2Xse6ZrdxXm3Gmi3CYXkTVSRnlGfZrN8lLGD4_cjcPJ0QrhVCZXIo9CFez-Y%3D>
+--_----VHWAU7ltLnzAp0KRzXxBnw===_52/D3-30557-C5B88166
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="UTF-8"
+
+<!DOCTYPE html><html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"u=
+rn:schemas-microsoft-com:office:office" lang=3D"en" style=3D"box-sizing: bo=
+rder-box;"><head><title></title><meta http-equiv=3D"Content-Type" content=
+=3D"text/html; charset=3Dutf-8"><meta name=3D"viewport" content=3D"width=3D=
+device-width,initial-scale=3D1"><!--[if mso]><xml><o:OfficeDocumentSettings=
+><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettin=
+gs></xml><![endif]--><!--[if !mso]><!--><link href=3D"https://fonts.googlea=
+pis.com/css2=3Ffamily=3DLexend+Deca:wght@300&amp;family=3DNoto+Serif&amp;di=
+splay=3Dswap" rel=3D"stylesheet" type=3D"text/css"><link href=3D"https://fo=
+nts.googleapis.com/css2=3Ffamily=3DLexend+Deca:wght@300&amp;display=3Dswap"=
+ rel=3D"stylesheet" type=3D"text/css"><link href=3D"https://fonts.googleapi=
+s.com/css2=3Ffamily=3DLexend+Deca&amp;display=3Dswap" rel=3D"stylesheet" ty=
+pe=3D"text/css"><!--<![endif]--><style>*{box-sizing:border-box}body{margin:=
+0;padding:0}a[x-apple-data-detectors]{color:inherit!important;text-decorati=
+on:inherit!important}#MessageViewBody a{color:inherit;text-decoration:none}=
+p{line-height:inherit}.desktop_hide,.desktop_hide table{mso-hide:all;displa=
+y:none;max-height:0;overflow:hidden}.image_block img+div{display:none}@medi=
+a(max-width:620px){.image_block div.fullWidth{max-width:100%!important}.mob=
+ile_hide{display:none}.row-content{width:100%!important}.stack .column{widt=
+h:100%;display:block}.mobile_hide{min-height:0;max-height:0;max-width:0;ove=
+rflow:hidden;font-size:0}.desktop_hide,.desktop_hide table{display:table!im=
+portant;max-height:none!important}}</style></head><body style=3D"box-sizing=
+: border-box; background-color: #ededed; margin: 0; padding: 0; -webkit-tex=
+t-size-adjust: none; text-size-adjust: none;">=0D=0A<div style=3D"color:tra=
+nsparent;visibility:hidden;opacity:0;font-size:0px;border:0;max-height:1px;=
+width:1px;margin:0px;padding:0px;border-width:0px!important;display:none!im=
+portant;line-height:0px!important;"><img border=3D"0" width=3D"1" height=3D=
+"1" src=3D"http://post.spmailtechnolo.com/q/4-hgKVo2S_uzGjD-_ViiTQ~~/AARGbA=
+A~/RgRn-xBcPVcDc3BjQgpmEFyLGGaHXj0nUhJnaG9zdHlha0BnbWFpbC5jb21YBAAAAy8~" al=
+t=3D""/></div>=0D=0A<span style=3D"color:transparent;visibility:hidden;disp=
+lay:none;opacity:0;height:0;width:0;font-size:0;">Here are a few resources =
+to help you get started. </span><img src=3D"https://links.iterable.com/e/eo=
+=3F_t=3D86ba93b39a0e415ea7cd8e8ed81051cd&amp;_m=3D4a8ac7c017ae4e0d96cb7d39a=
+92b22ad&amp;_e=3D_jM0iwdGzOU_IITk9RVliaHunK_sEXXtAbWCAdShNRh8I_LE8HBewDTuCA=
+13XFhRaZyK6In2qKOm8nrmIHc-Qha7eyNsPzHNCghE52PCx_f8AnBkxwNNGvBEsjPFQAu48vkN5=
+v8dDAuAUpifOa1b-w%3D%3D" style=3D"border:0;width:1px;height:1px;border-widt=
+h:0px!important;display:none!important;line-height:0!important;" width=3D"1=
+" height=3D"1"/><table class=3D"nl-container" width=3D"100%" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizin=
+g: border-box; mso-table-lspace: 0; mso-table-rspace: 0; background-color: =
+#ededed;" bgcolor=3D"#ededed"><tbody style=3D"box-sizing: border-box;"><tr =
+style=3D"box-sizing: border-box;"><td style=3D"box-sizing: border-box;"><ta=
+ble class=3D"row row-1" align=3D"center" width=3D"100%" border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: bo=
+rder-box; mso-table-lspace: 0; mso-table-rspace: 0;"><tbody style=3D"box-si=
+zing: border-box;"><tr style=3D"box-sizing: border-box;"><td style=3D"box-s=
+izing: border-box;"><table class=3D"row-content stack" align=3D"center" bor=
+der=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; backg=
+round-color: #001e2b; background-image: url(https://d2axdqolvqmdvx.cloudfro=
+nt.net/a0bb6db3-a790-476c-a7e2-9adc331f6e15/dark_bg_img.png); background-re=
+peat: no-repeat; color: #333; width: 600px; margin: 0 auto;" width=3D"600" =
+bgcolor=3D"#001e2b" background=3D"https://d2axdqolvqmdvx.cloudfront.net/a0b=
+b6db3-a790-476c-a7e2-9adc331f6e15/dark_bg_img.png"><tbody style=3D"box-sizi=
+ng: border-box;"><tr style=3D"box-sizing: border-box;"><td class=3D"column =
+column-1" width=3D"100%" style=3D"box-sizing: border-box; mso-table-lspace:=
+ 0; mso-table-rspace: 0; font-weight: 400; text-align: left; vertical-align=
+: top; border-top: 0; border-right: 0; border-bottom: 0; border-left: 0;" a=
+lign=3D"left" valign=3D"top"><table class=3D"image_block block-1" width=3D"=
+100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation=
+" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0=
+;"><tr style=3D"box-sizing: border-box;"><td class=3D"pad" style=3D"box-siz=
+ing: border-box; padding-bottom: 5px; padding-left: 30px; padding-right: 30=
+px; padding-top: 60px; width: 100%;" width=3D"100%"><div class=3D"alignment=
+" align=3D"left" style=3D"box-sizing: border-box; line-height: 10px;"><div =
+style=3D"box-sizing: border-box; max-width: 120px;"><img src=3D"https://d15=
+k2d11r6t6rl.cloudfront.net/public/users/Integrators/669d5713-9b6a-46bb-bd7e=
+-c542cff6dd6a/86ba93b39a0e415ea7cd8e8ed81051cd/MongoDB%20Logos/Logo_RGB_Whi=
+te.png" style=3D"box-sizing: border-box; display: block; height: auto; bord=
+er: 0; width: 100%;" width=3D"120"></div></div></td></tr></table><table cla=
+ss=3D"text_block block-2" width=3D"100%" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; mso-t=
+able-lspace: 0; mso-table-rspace: 0; word-break: break-word;"><tr style=3D"=
+box-sizing: border-box;"><td class=3D"pad" style=3D"box-sizing: border-box;=
+ padding-bottom: 5px; padding-left: 60px; padding-right: 40px; padding-top:=
+ 40px;"><div style=3D"box-sizing: border-box; font-family: sans-serif;"><di=
+v class style=3D"box-sizing: border-box; font-size: 12px; font-family: 'Lex=
+end Deca',sans-serif; mso-line-height-alt: 14.399999999999999px; color: #55=
+5; line-height: 1.2;"><p style=3D"box-sizing: border-box; line-height: inhe=
+rit; margin: 0; font-size: 12px; mso-line-height-alt: 14.399999999999999px;=
+">&nbsp;</p><p style=3D"box-sizing: border-box; line-height: inherit; margi=
+n: 0; font-size: 12px; mso-line-height-alt: 14.399999999999999px;"><span st=
+yle=3D"box-sizing: border-box; color: #ffffff; font-size: 34px;">Welcome to=
+ MongoDB</span></p><p style=3D"box-sizing: border-box; line-height: inherit=
+; margin: 0; font-size: 12px; mso-line-height-alt: 14.399999999999999px;"><=
+span style=3D"box-sizing: border-box; color: #ffffff; font-size: 34px;">=EC=
+=98=81=EA=B8=B0</span></p><p style=3D"box-sizing: border-box; line-height: =
+inherit; margin: 0; font-size: 12px; mso-line-height-alt: 14.39999999999999=
+9px;">&nbsp;</p></div></div></td></tr></table><table class=3D"text_block bl=
+ock-3" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso=
+-table-rspace: 0; word-break: break-word;"><tr style=3D"box-sizing: border-=
+box;"><td class=3D"pad" style=3D"box-sizing: border-box; padding-left: 55px=
+; padding-right: 45px; padding-top: 20px;"><div style=3D"box-sizing: border=
+-box; font-family: sans-serif;"><div class style=3D"box-sizing: border-box;=
+ font-size: 12px; font-family: Lexend Deca,sans-serif; mso-line-height-alt:=
+ 14.399999999999999px; color: #fff; line-height: 1.2;"><p style=3D"box-sizi=
+ng: border-box; line-height: inherit; margin: 0; font-size: 16px; mso-line-=
+height-alt: 19.2px;">Ready to dive into MongoDB Atlas=3F Just complete thes=
+e four steps and you'll have your MongoDB cluster up and running.</p><ol st=
+yle=3D"box-sizing: border-box; font-size: 16px;"><li aria-level=3D"1" style=
+=3D"box-sizing: border-box;"> <span style=3D"box-sizing: border-box; font-s=
+ize: 16px; color: #00ed64;"><a href=3D"https://links.iterable.com/u/click=
+=3F_t=3D86ba93b39a0e415ea7cd8e8ed81051cd&_m=3D4a8ac7c017ae4e0d96cb7d39a92b2=
+2ad&_e=3DGovw8q_cs_lXNoYdbuzQyA-0eM-oifoPAAigYWJ0PIECZNsztBypkMiXWWn5nId6lO=
+fLjldXCqo58W2ls6-aDzo_Id6FBx0aL4_jJaVM-QjW-kk-QavWpzAvJ8VgNSN26Ng8tibcUNK6M=
+HvN1PF_bt-P-xxb-DbzGhVAxHrIHo6iwEq9CeeySeG8RBjcQ8IcL5v_8K2gEReOHAeWuXGoYWho=
+kYMHlhK_M3BOd-Fkxa4MOrY_-3k3KTQSKLXhpnpVgHc9N0xPeWGbytB7CoVpSGHIAse5T2Ea3_7=
+Rc4q5rWSytwSO5WPdfmpfIixlVyCtbKOTW2DivU8bOxFeSgoAGb7QU7X0H0Z_yW66o1MCvrk%3D=
+" target=3D"_blank" style=3D"box-sizing: border-box; text-decoration: none;=
+ color: #00ed64;" rel=3D"noopener">Create cluster</a></span></li><li aria-l=
+evel=3D"1" style=3D"box-sizing: border-box;"><span style=3D"box-sizing: bor=
+der-box; font-size: 16px; color: #00ed64;"><a href=3D"https://links.iterabl=
+e.com/u/click=3F_t=3D86ba93b39a0e415ea7cd8e8ed81051cd&_m=3D4a8ac7c017ae4e0d=
+96cb7d39a92b22ad&_e=3DGovw8q_cs_lXNoYdbuzQyA-0eM-oifoPAAigYWJ0PIE2V4-nvotr9=
+R_ijmSSTlQ_6mytK3qegWOwJBcXktlUe5CZcTgDZWDfjVXT2lB-tv3cx5AY63cOEMQqVjJZiQT0=
+YCEvOaec9rQ7i9ay7ICJt--HMZBbnIY8uNuaOsSCSMYpwSHct7KdHBmz_ScP2pAzU0818L4EImg=
+y1KmIPF9GreLGSNQGlye_XNFH_84GN1AdoW77NSIcHFnKVRvOVSxnp80eNqS76cgt7mij6eAGJP=
+ARM239979rVP8nAbwnRLFlpM4k7M9VfxPos7KAjNQz3sBFoKWXp0VzFmhUlanMoQ%3D%3D" tar=
+get=3D"_blank" style=3D"box-sizing: border-box; text-decoration: none; colo=
+r: #00ed64;" rel=3D"noopener">Add IP address to access list</a></span></li>=
+<li aria-level=3D"1" style=3D"box-sizing: border-box;"> <span style=3D"box-=
+sizing: border-box; font-size: 16px; color: #00ed64;"><a href=3D"https://li=
+nks.iterable.com/u/click=3F_t=3D86ba93b39a0e415ea7cd8e8ed81051cd&_m=3D4a8ac=
+7c017ae4e0d96cb7d39a92b22ad&_e=3DGovw8q_cs_lXNoYdbuzQyA-0eM-oifoPAAigYWJ0PI=
+ECZNsztBypkMiXWWn5nId6C8_OjZHofJHCGsEP3UF81CCmBZ6SZ5mk414wpZAdvsrgP4ZbgLrik=
+WcwlVhwfSMTJGvBpZzxj6f5GkGr0N_47zdiN_JNA-VVvOcMj6Cn2cjtGFcPLSm5rIqIm6-r_qZD=
+cL7PSimLGxgVhoQIeb1OC8vQ_rU5NN9gVt_rqikgDCS-3OoeBY17FR23NDfzMzz0GXjX9ElP8gF=
+8cxmUs_5V5xhui7nQ0Jx41AHRJBLIZIUkmJdW-mXw4MQNlCPUrlDjCVr2oaCZDok_HIlWrgA0de=
+qwmbru7rIRmX6Wf0SpYg8%3D" target=3D"_blank" style=3D"box-sizing: border-box=
+; text-decoration: none; color: #00ed64;" rel=3D"noopener">Create a user</a=
+></span></li><li aria-level=3D"1" style=3D"box-sizing: border-box;"><span s=
+tyle=3D"box-sizing: border-box; font-size: 16px; color: #00ed64;"><a href=
+=3D"https://links.iterable.com/u/click=3F_t=3D86ba93b39a0e415ea7cd8e8ed8105=
+1cd&_m=3D4a8ac7c017ae4e0d96cb7d39a92b22ad&_e=3DGovw8q_cs_lXNoYdbuzQyA-0eM-o=
+ifoPAAigYWJ0PIECZNsztBypkMiXWWn5nId6eMLSve4QwlXdOp22DhDl16H3sy4FZKUjqPqjbAP=
+GVrfzXYjgqJpKsvEaPCimvs7gi-e8UMhMNwSvz06ATkCJUdtC87IIQvO8IOpf5aLwPvNyynKheD=
+VDIdjDMkMtmMNTVs7r8hoXqTmQd8L_ukUifxFgN2T6OusuFVdZuCd3RHfTvAAHWqm0bS_zwDOSX=
+RvfuLxt1QC8-RAW7o5VCqQvbIlDGIGDhIpg7y06W4G4qerjVrYBTt6GFIvIxTjynBFKe3rG_S0i=
+DzkBMw3Wpcgk7bLmiTn4_kpleglgyfIfUbo%3D" target=3D"_blank" style=3D"box-sizi=
+ng: border-box; text-decoration: none; color: #00ed64;" rel=3D"noopener">Co=
+nnect to cluster</a></span></li></ol><p style=3D"box-sizing: border-box; li=
+ne-height: inherit; margin: 0; mso-line-height-alt: 19.2px;"> <span style=
+=3D"box-sizing: border-box; font-size: 16px;">Ready to start building=3F Po=
+pulate your newly-created cluster with some of our sample datasets. Great f=
+or testing and quick prototyping!</span></p><p style=3D"box-sizing: border-=
+box; line-height: inherit; margin: 0; mso-line-height-alt: 14.3999999999999=
+99px;">&nbsp;</p></div></div></td></tr></table><table class=3D"button_block=
+ block-4" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" r=
+ole=3D"presentation" style=3D"box-sizing: border-box; mso-table-lspace: 0; =
+mso-table-rspace: 0;"><tr style=3D"box-sizing: border-box;"><td class=3D"pa=
+d" style=3D"box-sizing: border-box; padding-bottom: 20px; padding-left: 10p=
+x; padding-right: 10px; padding-top: 10px; text-align: center;" align=3D"ce=
+nter"><div class=3D"alignment" align=3D"center" style=3D"box-sizing: border=
+-box;"><!--[if mso]><v:roundrect xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" href=3D"https://links.ite=
+rable.com/u/click=3F_t=3D86ba93b39a0e415ea7cd8e8ed81051cd&_m=3D4a8ac7c017ae=
+4e0d96cb7d39a92b22ad&_e=3DGovw8q_cs_lXNoYdbuzQyP0yGLrtnBJb01-1T3TCiJJd9W0Cp=
+aS_2ubHoCBs9YoCpeYHRvcHn_tTcEu5ky3WbrIoxfSg6I6b72VQE5px5Ko8AqA2Pr7fIHOjmt5Z=
+3TMfniB22TnyDVJ-T4o7FtN6_N_YwxgKuHcs2sEGp-90Ei3dNpXSEgq0MeGs-p-o47-6Xlpy0g4=
+1veyvD-W2yH9bdT6UedGvphjimU1RsN_OcS0IjR05hC4UF05Cq4RUc43nkb7TdnG7GGe4HwVlGQ=
+1M3UNfJWnVwrJZR707A9IKlsRZFSjRXQTSzka-rTiH9I_3IRGDLgFzMLrW8FAgp5qBVbMWDMIrz=
+nRmnu_zrw4E_aHuvrS01FdqvTv234XzilU9hzfjYx8J3FlWiq4sZhfGhg%3D%3D" style=3D"h=
+eight:47px;width:133px;v-text-anchor:middle;" arcsize=3D"10%" strokeweight=
+=3D"0.75pt" strokecolor=3D"#00684A" fillcolor=3D"#00ed64"> <w:anchorlock/> =
+<v:textbox inset=3D"0px,0px,0px,0px"> <center style=3D"color:#00222f; font-=
+family:sans-serif; font-size:16px"><![endif]--> <a href=3D"https://links.it=
+erable.com/u/click=3F_t=3D86ba93b39a0e415ea7cd8e8ed81051cd&_m=3D4a8ac7c017a=
+e4e0d96cb7d39a92b22ad&_e=3DGovw8q_cs_lXNoYdbuzQyP0yGLrtnBJb01-1T3TCiJJd9W0C=
+paS_2ubHoCBs9YoCpeYHRvcHn_tTcEu5ky3WbrIoxfSg6I6b72VQE5px5Ko8AqA2Pr7fIHOjmt5=
+Z3TMfniB22TnyDVJ-T4o7FtN6_N_YwxgKuHcs2sEGp-90Ei3dNpXSEgq0MeGs-p-o47-6Xlpy0g=
+41veyvD-W2yH9bdT6UedGvphjimU1RsN_OcS0IjR05hC4UF05Cq4RUc43noTk1bgnsmd6WEckng=
+WAANLcZPXJ6M4YFxXGapqd_d16FpbrGXB1of7Sbqqihy4-CQick72hJPxOPw7Oo0MpkP6qv6lTw=
+ZAZawBBgyXfFmT1m39ecAQYPbd62ommV85YORdFrH4CqaM1WR3ggTDVWeQ%3D%3D" target=3D=
+"_blank" style=3D"box-sizing: border-box; text-decoration: none; display: i=
+nline-block; color: #00222f; background-color: #00ed64; border-radius: 4px;=
+ width: auto; border-top: 1px solid #00684A; font-weight: 400; border-right=
+: 1px solid #00684A; border-bottom: 1px solid #00684A; border-left: 1px sol=
+id #00684A; padding-top: 5px; padding-bottom: 5px; font-family: 'Lexend Dec=
+a', sans-serif; font-size: 16px; text-align: center; mso-border-alt: none; =
+word-break: keep-all;"><span style=3D"box-sizing: border-box; padding-left:=
+ 20px; padding-right: 20px; font-size: 16px; display: inline-block; letter-=
+spacing: normal;"><span style=3D"box-sizing: border-box; word-break: break-=
+word; line-height: 32px;">Get started</span></span></a> <!--[if mso]></cent=
+er></v:textbox></v:roundrect><![endif]--></div></td></tr></table><table cla=
+ss=3D"divider_block block-5" width=3D"100%" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; ms=
+o-table-lspace: 0; mso-table-rspace: 0;"><tr style=3D"box-sizing: border-bo=
+x;"><td class=3D"pad" style=3D"box-sizing: border-box;"><div class=3D"align=
+ment" align=3D"center" style=3D"box-sizing: border-box;"><table border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"90%" s=
+tyle=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0;">=
+<tr style=3D"box-sizing: border-box;"><td class=3D"divider_inner" style=3D"=
+box-sizing: border-box; font-size: 1px; line-height: 1px; border-top: 1px s=
+olid #999da0;"><span style=3D"box-sizing: border-box;">&#8202;</span></td><=
+/tr></table></div></td></tr></table><table class=3D"text_block block-6" wid=
+th=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presen=
+tation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rsp=
+ace: 0; word-break: break-word;"><tr style=3D"box-sizing: border-box;"><td =
+class=3D"pad" style=3D"box-sizing: border-box; padding-bottom: 20px; paddin=
+g-left: 50px; padding-right: 35px; padding-top: 25px;"><div style=3D"box-si=
+zing: border-box; font-family: sans-serif;"><div class style=3D"box-sizing:=
+ border-box; font-size: 14px; font-family: Lexend Deca,sans-serif; mso-line=
+-height-alt: 16.8px; color: #fff; line-height: 1.2;"><p style=3D"box-sizing=
+: border-box; line-height: inherit; margin: 0; font-size: 14px; mso-line-he=
+ight-alt: 16.8px;"><span style=3D"box-sizing: border-box; font-size: 16px;"=
+>Or check out this 6 minute video where we'll guide you through your cluste=
+r setup.</span></p></div></div></td></tr></table><table class=3D"image_bloc=
+k block-7" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+role=3D"presentation" style=3D"box-sizing: border-box; mso-table-lspace: 0;=
+ mso-table-rspace: 0;"><tr style=3D"box-sizing: border-box;"><td class=3D"p=
+ad" style=3D"box-sizing: border-box; padding-bottom: 5px; padding-left: 60p=
+x; padding-right: 60px; padding-top: 5px; width: 100%;" width=3D"100%"><div=
+ class=3D"alignment" align=3D"center" style=3D"box-sizing: border-box; line=
+-height: 10px;"><div class=3D"fullWidth" style=3D"box-sizing: border-box; m=
+ax-width: 360px;"><a href=3D"https://links.iterable.com/u/click=3F_t=3D86ba=
+93b39a0e415ea7cd8e8ed81051cd&_m=3D4a8ac7c017ae4e0d96cb7d39a92b22ad&_e=3DGov=
+w8q_cs_lXNoYdbuzQyO5dNwZFtPWTLJPeRI2YuSRj61OIYTZdqgjXzQNEoEL9lpaEd_iPLEcIoU=
+xpuhBvxEnB_h6PX_dSVAutflJlKnC2SP0rJMxasP95eMlILP3tU399uvPfz1tgWxbF_ECgEcIaF=
+xKGV1qYM2mNlnu5MYaZcizI6huBK-LMpeOiv7kqxoWaGAQe2rG60p0nPamSezCsy0QheY8YM1Fv=
+E8OkqC1LkSI8riQ0tZdVkC0L5TpWe56M8o-Q-aFh1f3_orfLoTp6us0dzN8HI20RbQ9hMZ0DmJP=
+Y4s_dn4oyMJQv-GFUFx67ayGJDs2tWUIF0HQv5PC11v7TB8q1CzKIgkIDfGKsICPdoKmyMSDjON=
+6E9M61ln_7rpT3mKX144nshA7w9noxaysAwP2j8b_Pj0dmtYn8wXVegbqwEKeaUfUYzVn6hJHRv=
+GJzJ0t8ojm4ww-lSA%3D%3D" target=3D"_blank" style=3D"box-sizing: border-box;=
+ outline: none;" tabindex=3D"-1"><img src=3D"https://d15k2d11r6t6rl.cloudfr=
+ont.net/public/users/Integrators/669d5713-9b6a-46bb-bd7e-c542cff6dd6a/86ba9=
+3b39a0e415ea7cd8e8ed81051cd/editor_images/image%20%2881%29.png" style=3D"bo=
+x-sizing: border-box; display: block; height: auto; border: 0; width: 100%;=
+" width=3D"360"></a></div></div></td></tr></table></td></tr></tbody></table=
+></td></tr></tbody></table><table class=3D"row row-2" align=3D"center" widt=
+h=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"present=
+ation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspa=
+ce: 0;"><tbody style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: b=
+order-box;"> <td style=3D"box-sizing: border-box;"><table class=3D"row-cont=
+ent" align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso=
+-table-rspace: 0; background-color: #001e2b; color: #000; width: 600px; mar=
+gin: 0 auto;" width=3D"600" bgcolor=3D"#001e2b"><tbody style=3D"box-sizing:=
+ border-box;"><tr style=3D"box-sizing: border-box;"><td class=3D"column col=
+umn-1" width=3D"100%" style=3D"box-sizing: border-box; mso-table-lspace: 0;=
+ mso-table-rspace: 0; font-weight: 400; text-align: left; padding-bottom: 5=
+px; padding-top: 20px; vertical-align: top; border-top: 0; border-right: 0;=
+ border-bottom: 0; border-left: 0;" align=3D"left" valign=3D"top"><table cl=
+ass=3D"divider_block block-1" width=3D"100%" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; m=
+so-table-lspace: 0; mso-table-rspace: 0;"><tr style=3D"box-sizing: border-b=
+ox;"><td class=3D"pad" style=3D"box-sizing: border-box;"><div class=3D"alig=
+nment" align=3D"center" style=3D"box-sizing: border-box;"><table border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"90%" =
+style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0;"=
+><tr style=3D"box-sizing: border-box;"><td class=3D"divider_inner" style=3D=
+"box-sizing: border-box; font-size: 1px; line-height: 1px; border-top: 1px =
+solid #999da0;"><span style=3D"box-sizing: border-box;">&#8202;</span></td>=
+</tr></table></div></td></tr></table> <table class=3D"text_block block-2" w=
+idth=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pres=
+entation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-r=
+space: 0; word-break: break-word;"><tr style=3D"box-sizing: border-box;"><t=
+d class=3D"pad" style=3D"box-sizing: border-box; padding-bottom: 20px; padd=
+ing-left: 50px; padding-right: 35px; padding-top: 25px;"><div style=3D"box-=
+sizing: border-box; font-family: sans-serif;"><div class style=3D"box-sizin=
+g: border-box; font-size: 14px; font-family: Lexend Deca,sans-serif; mso-li=
+ne-height-alt: 16.8px; color: #fff; line-height: 1.2;"><p style=3D"box-sizi=
+ng: border-box; line-height: inherit; margin: 0; text-align: center; font-s=
+ize: 16px; mso-line-height-alt: 19.2px;"><span style=3D"box-sizing: border-=
+box; font-size: 22px;">Advantages of the document model</span></p><p style=
+=3D"box-sizing: border-box; line-height: inherit; margin: 0; font-size: 16p=
+x; mso-line-height-alt: 16.8px;">&nbsp;</p><p style=3D"box-sizing: border-b=
+ox; line-height: inherit; margin: 0; font-size: 16px; mso-line-height-alt: =
+19.2px;"><span style=3D"box-sizing: border-box; font-size: 16px;">Instead o=
+f storing data in fixed rows and columns, documents offer a variety of adva=
+ntages, including:</span><br style=3D"box-sizing: border-box;"><br style=3D=
+"box-sizing: border-box;"></p><ul style=3D"box-sizing: border-box; line-hei=
+ght: 1.2; mso-line-height-alt: 19.2px;"><li aria-level=3D"1" style=3D"box-s=
+izing: border-box;"><span style=3D"box-sizing: border-box; font-size: 16px;=
+">An intuitive data model that is fast and easy to work with.</span></li><l=
+i aria-level=3D"1" style=3D"box-sizing: border-box;"><span style=3D"box-siz=
+ing: border-box; font-size: 16px;">A flexible schema that allows for your d=
+ata model to evolve as needs change.</span></li><li aria-level=3D"1" style=
+=3D"box-sizing: border-box;"><span style=3D"box-sizing: border-box; font-si=
+ze: 16px;">The ability to horizontally scale out.</span></li></ul></div></d=
+iv></td></tr></table></td></tr></tbody></table></td></tr></tbody></table><t=
+able class=3D"row row-3" align=3D"center" width=3D"100%" border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: b=
+order-box; mso-table-lspace: 0; mso-table-rspace: 0;"><tbody style=3D"box-s=
+izing: border-box;"><tr style=3D"box-sizing: border-box;"><td style=3D"box-=
+sizing: border-box;"><table class=3D"row-content stack" align=3D"center" bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; backg=
+round-color: #001e2b; color: #000; border-radius: 0; width: 600px; margin: =
+0 auto;" width=3D"600" bgcolor=3D"#001e2b"><tbody style=3D"box-sizing: bord=
+er-box;"><tr style=3D"box-sizing: border-box;"><td class=3D"column column-1=
+" width=3D"100%" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-=
+table-rspace: 0; font-weight: 400; text-align: left; padding-bottom: 5px; p=
+adding-top: 5px; vertical-align: top; border-top: 0; border-right: 0; borde=
+r-bottom: 0; border-left: 0;" align=3D"left" valign=3D"top"><table class=3D=
+"button_block block-1" width=3D"100%" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; mso-tabl=
+e-lspace: 0; mso-table-rspace: 0;"><tr style=3D"box-sizing: border-box;"><t=
+d class=3D"pad" style=3D"box-sizing: border-box; padding-bottom: 20px; padd=
+ing-left: 10px; padding-right: 10px; padding-top: 10px; text-align: center;=
+" align=3D"center"><div class=3D"alignment" align=3D"center" style=3D"box-s=
+izing: border-box;"><!--[if mso]><v:roundrect xmlns:v=3D"urn:schemas-micros=
+oft-com:vml" xmlns:w=3D"urn:schemas-microsoft-com:office:word" href=3D"http=
+s://links.iterable.com/u/click=3F_t=3D86ba93b39a0e415ea7cd8e8ed81051cd&_m=
+=3D4a8ac7c017ae4e0d96cb7d39a92b22ad&_e=3DGovw8q_cs_lXNoYdbuzQyA-0eM-oifoPAA=
+igYWJ0PIHA6LIn4h4Oi4hXthmZUg--7LtdYmwFCRIm-htOYol6wiAop0-epXYhlkGWgc1KgxFJ4=
+hye6ZlXEl96ePJRknuEMMwxmO9CAQl_s2MqnQnOHPmhYDVIz-Nuwtb2tNjsPJGkWbRatyXqCIFQ=
+Jk3C4u_3CONYPQQR-I1wApoT3g308ow4gzjYPvIlqqQh3Nmu90Ek7GJCntb1O56f_9r39Xm8S5M=
+n-hktt77USEtngt_lBg0KmhWdvdTSFjm-QEVF4SbVGF5zVj4tWxd1zj-RS78m" style=3D"hei=
+ght:47px;width:130px;v-text-anchor:middle;" arcsize=3D"10%" strokeweight=3D=
+"0.75pt" strokecolor=3D"#00684A" fillcolor=3D"#00ed64"> <w:anchorlock/> <v:=
+textbox inset=3D"0px,0px,0px,0px"> <center style=3D"color:#00222f; font-fam=
+ily:sans-serif; font-size:16px"><![endif]--> <a href=3D"https://links.itera=
+ble.com/u/click=3F_t=3D86ba93b39a0e415ea7cd8e8ed81051cd&_m=3D4a8ac7c017ae4e=
+0d96cb7d39a92b22ad&_e=3DGovw8q_cs_lXNoYdbuzQyA-0eM-oifoPAAigYWJ0PIHA6LIn4h4=
+Oi4hXthmZUg--7LtdYmwFCRIm-htOYol6wiAop0-epXYhlkGWgc1KgxFJ4hye6ZlXEl96ePJRkn=
+uEMMwxmO9CAQl_s2MqnQnOHPmhYDVIz-Nuwtb2tNjsPJEOQPKq6E24q5yLldtzZMl3_Bnr1mfR3=
+_WrU20lVK6XgJL0ALnaQcYpATM70gSPCu3U5YJZnCKx2en_xQTAgwOzr8XZBXNJe630CmASBDjP=
+no0EMSatndvYVUuT06QkafAGL_8C7wYXupvtmxLLnWwD" target=3D"_blank" style=3D"bo=
+x-sizing: border-box; text-decoration: none; display: inline-block; color: =
+#00222f; background-color: #00ed64; border-radius: 4px; width: auto; border=
+-top: 1px solid #00684A; font-weight: 400; border-right: 1px solid #00684A;=
+ border-bottom: 1px solid #00684A; border-left: 1px solid #00684A; padding-=
+top: 5px; padding-bottom: 5px; font-family: 'Lexend Deca', sans-serif; font=
+-size: 16px; text-align: center; mso-border-alt: none; word-break: keep-all=
+;"><span style=3D"box-sizing: border-box; padding-left: 20px; padding-right=
+: 20px; font-size: 16px; display: inline-block; letter-spacing: normal;"><s=
+pan style=3D"box-sizing: border-box; word-break: break-word; line-height: 3=
+2px;">Read more</span></span></a> <!--[if mso]></center></v:textbox></v:rou=
+ndrect><![endif]--></div></td></tr></table><table class=3D"html_block block=
+-2" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-ta=
+ble-rspace: 0;"><tr style=3D"box-sizing: border-box;"><td class=3D"pad" sty=
+le=3D"box-sizing: border-box;"><div style=3D"box-sizing: border-box; font-f=
+amily: Lexend Deca,sans-serif; text-align: center;" align=3D"center"> </div=
+></td></tr></table></td></tr></tbody></table></td></tr></tbody></table><tab=
+le class=3D"row row-4" align=3D"center" width=3D"100%" border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: bor=
+der-box; mso-table-lspace: 0; mso-table-rspace: 0; background-size: auto;">=
+<tbody style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-bo=
+x;"><td style=3D"box-sizing: border-box;"><table class=3D"row-content" alig=
+n=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rs=
+pace: 0; background-size: auto; background-color: #001e2b; color: #000; wid=
+th: 600px; margin: 0 auto;" width=3D"600" bgcolor=3D"#001e2b"><tbody style=
+=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td clas=
+s=3D"column column-1" width=3D"100%" style=3D"box-sizing: border-box; mso-t=
+able-lspace: 0; mso-table-rspace: 0; font-weight: 400; text-align: left; pa=
+dding-bottom: 5px; padding-top: 5px; vertical-align: top; border-top: 0; bo=
+rder-right: 0; border-bottom: 0; border-left: 0;" align=3D"left" valign=3D"=
+top"><table class=3D"html_block block-1" width=3D"100%" border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: bo=
+rder-box; mso-table-lspace: 0; mso-table-rspace: 0;"><tr style=3D"box-sizin=
+g: border-box;"><td class=3D"pad" style=3D"box-sizing: border-box;"><div st=
+yle=3D"box-sizing: border-box; font-family: Lexend Deca,sans-serif; text-al=
+ign: center;" align=3D"center"><!DOCTYPE html><html xmlns:v=3D"urn:schemas-=
+microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" lang=
+=3D"en"><head><title></title><meta http-equiv=3D"Content-Type" content=3D"t=
+ext/html; charset=3Dutf-8"><meta name=3D"viewport" content=3D"width=3Ddevic=
+e-width,initial-scale=3D1"><!--[if mso]><xml><o:OfficeDocumentSettings><o:P=
+ixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></=
+xml><![endif]--><!--[if !mso]><!--><link href=3D"https://fonts.googleapis.c=
+om/css2=3Ffamily=3DLexend+Deca&amp;display=3Dswap" rel=3D"stylesheet" type=
+=3D"text/css"><!--<![endif]--><style>*{box-sizing:border-box}body{margin:0;=
+padding:0}a[x-apple-data-detectors]{color:inherit!important;text-decoration=
+:inherit!important}#MessageViewBody a{color:inherit;text-decoration:none}p{=
+line-height:inherit}.desktop_hide,.desktop_hide table{mso-hide:all;display:=
+none;max-height:0;overflow:hidden}.image_block img+div{display:none}@media(=
+max-width:670px){.mobile_hide{display:none}.row-content{width:100%!importan=
+t}.stack .column{width:100%;display:block}.mobile_hide{min-height:0;max-hei=
+ght:0;max-width:0;overflow:hidden;font-size:0}.desktop_hide,.desktop_hide t=
+able{display:table!important;max-height:none!important}.row-2 .column-1 .bl=
+ock-1.text_block td.pad{padding:30px 40px 35px!important}.row-1 .column-2 .=
+block-1.button_block a,.row-1 .column-2 .block-1.button_block div,.row-1 .c=
+olumn-2 .block-1.button_block span{font-size:14px!important;line-height:28p=
+x!important}.row-2 .column-1{padding:0 15px!important}}</style><!--[if true=
+]><style>.forceBgColor{background-color:white!important}</style><![endif]--=
+> <w:anchorlock/> <v:textbox inset=3D"0px,0px,0px,0px"> <center style=3D"co=
+lor:#000000; font-family:sans-serif; font-size:14px"> <![endif]--> <!--[if =
+mso]></center></v:textbox></v:roundrect><![endif]--></div></td></tr></table=
+></td></tr></tbody></table></td></tr></tbody></table><table class=3D"row ro=
+w-2" align=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" role=3D"presentation" style=3D"mso-table-lspace:0;mso-table-rspa=
+ce:0;background-size:auto"><tbody><tr><td><table class=3D"row-content stack=
+" align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"mso-table-lspace:0;mso-table-rspace:0;background-si=
+ze:auto;background-image:url(https://d15k2d11r6t6rl.cloudfront.net/public/u=
+sers/Integrators/669d5713-9b6a-46bb-bd7e-c542cff6dd6a/86ba93b39a0e415ea7cd8=
+e8ed81051cd/Upcraft%20Jan%202024/Footer-ComponentDARK.png);background-posit=
+ion:top center;background-repeat:no-repeat;border-radius:0;color:#000;width=
+:600px;margin:0 auto" width=3D"600"><tbody><tr><td class=3D"column column-1=
+" width=3D"100%" style=3D"mso-table-lspace:0;mso-table-rspace:0;font-weight=
+:400;text-align:left;padding-bottom:60px;padding-left:30px;padding-right:30=
+px;padding-top:40px;vertical-align:top;border-top:0;border-right:0;border-b=
+ottom:0;border-left:0"><table class=3D"text_block block-1" width=3D"100%" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"mso-table-lspace:0;mso-table-rspace:0;word-break:break-word"><tr><td cl=
+ass=3D"pad" style=3D"padding-bottom:10px;padding-top:10px"><div style=3D"fo=
+nt-family:sans-serif"><div class style=3D"font-size:14px;font-family:'Lexen=
+d Deca',sans-serif;mso-line-height-alt:16.8px;color:#fff;line-height:1.2"><=
+p style=3D"margin:0;font-size:14px;text-align:center;mso-line-height-alt:16=
+.8px">Copyright =C2=A9 2024 MongoDB, All rights reserved.<br>1633 Broadway=
+ Floor 38, New York, NY 10019<br> <a href=3D"https://links.iterable.com/e/e=
+vib=3F_t=3D86ba93b39a0e415ea7cd8e8ed81051cd&_m=3D4a8ac7c017ae4e0d96cb7d39a9=
+2b22ad&_e=3D_jM0iwdGzOU_IITk9RVliaHunK_sEXXtAbWCAdShNRjEVvGni92jRSyZkY9Ti3R=
+q" target=3D"_blank" style=3D"text-decoration: underline; color: #00ed64;" =
+rel=3D"noopener">view in browser</a>&nbsp;or&nbsp;<a href=3D"https://links.=
+iterable.com/e/eh=3F_t=3D86ba93b39a0e415ea7cd8e8ed81051cd&_m=3D4a8ac7c017ae=
+4e0d96cb7d39a92b22ad&_e=3DGovw8q_cs_lXNoYdbuzQyA-0eM-oifoPAAigYWJ0PIHc82Un_=
+m-Asb7-bPPHJzFXkPAtyYTwCR7u2J3hVDMjVeZ4RD9djLPAtC2e7-rcGFOBxQ4I7jFm0XFDYzyh=
+Z_HBLrAD4ogbYhBPzIpf-1KIjTR29GRYrBwQOkSS8yjLHCFmoFPuK2jcqzXvrphuPr1tOMACgxm=
+CksL49-9taGgRG6BdbGoleWzBCNcufZJePA-fXUjjxOWWtqK6xtPmMSft" target=3D"_blank=
+" style=3D"text-decoration: underline; color: #00ed64;" rel=3D"noopener">un=
+subscribe</a></p></div></div></td></tr></table></td></tr></tbody></table></=
+td></tr></tbody></table></td></tr></tbody></table><!-- End --></body></html=
+></div></td></tr></table></td></tr> </tbody></table></td></tr></tbody></tab=
+le></td></tr></tbody></table><!-- End -->=0D=0A<img border=3D"0" width=3D"1=
+" height=3D"1" alt=3D"" src=3D"http://post.spmailtechnolo.com/q/QAuTb8xd-Hg=
+_ImnzmPP5kw~~/AARGbAA~/RgRn-xBcPlcDc3BjQgpmEFyLGGaHXj0nUhJnaG9zdHlha0BnbWFp=
+bC5jb21YBAAAAy8~">=0D=0A</body></html>
+--_----VHWAU7ltLnzAp0KRzXxBnw===_52/D3-30557-C5B88166--
+

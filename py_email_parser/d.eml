@@ -1,0 +1,57 @@
+Received-SPF: pass (mx.daum.net: domain of ghostyak@gmail.com designates 209.85.218.42 as permitted sender)
+X-Hanmail-Peer-IP: 209.85.218.42
+X-Hanmail-Env-From: ghostyak@gmail.com
+X-Hanmail-Class: W
+X-Kakaomail-MID: Cj34IwAAIogAAAGO0vekLgCnRsE=
+X-Hermes-Message-Id: s3D0eSJCM1551064916
+Received: from mail-ej1-f42.google.com ([209.85.218.42]) by hermes of dmail-rmail-pgvm26 (10.61.248.35) with ESMTP id s3D0eSJCM1551064916 for <ghostyak@daum.net> (version=TLSv1.2 cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 13 Apr 2024 00:40:28 +0900 (KST)
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a4e2a4633ceso25708266b.1
+        for <ghostyak@daum.net>; Fri, 12 Apr 2024 08:40:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712936425; x=1713541225; darn=daum.net;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=H8Y2g598RAAvRInFej6LEKjjulzLNGMQBVRs0YLpz3Y=;
+        b=ZnqwtFqBAlmfRYD7hZn5WbkA9xqMjrPfkqeV3QkvggqkwkJs3+ly26uqIZO8QvT5aD
+         OE7a2S8hmCioszh6ZnTWW91IHc4mePL/pLC59KeQzo48uk4Awxnx7WCD3DAGJswg7nT1
+         J8xERsM7sAochT2x7BGuiq57YTP06h1KBxPmS6p5watnNcvOJcmHuueQUz36MKnJciTF
+         P1X+MkctG9F4AF7kX8UWIEXod88i9riNizpg9NCzsZBIZCuoUxpaExTBJABy73KFrg3d
+         DcuLjB8b6NWj+KyHy2FENJ9C6wnXB9S/8BzxbtHkSkX2rxjfhTpj04ZcRlqE3hD4zzQG
+         3g2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712936425; x=1713541225;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=H8Y2g598RAAvRInFej6LEKjjulzLNGMQBVRs0YLpz3Y=;
+        b=UX3FharfEnVMZWZ2VaUUgaIXLvIvmxikvXDxVTmaFyLIoTVeLdAnduT3zTljMACpMD
+         irUetcVcmnf3XrnePn2zDGRx0i5L6G1ibvie7chR02bxe9u0PrUaQ3Jy8AaiwknKE8dQ
+         cxvnXrXKjdunV5P3uO14FNy9MN9YCzD+WlY8i/RMAXDWz0NDuUtxlhtjA53IMj64ESJ7
+         wRgU6Xu1NTx7OHQPFivXrHHL5UE7E3iUGC2PLscY9g15oAqD/DKDf49TKQrRNcTpqjsM
+         Wc+YBvaAIqkaqSY+RJ9aU3+B+WCG8FOrk2eJnJG7Pd4cuuGPT/6X1tElz5Kk7l6FLBzf
+         cBzw==
+X-Gm-Message-State: AOJu0YwoGVuRWrSxHZoJQAdp6AWhx61p0gEpLjESWLtWYRxSYLNr+u7X
+	LEv0ny/hChnUefQOKRn5LCSTS5j6+xfNgseaKR9O/gmROA0rPx5ji2xHzzI2XKrFry5d85WBoGW
+	qezu8YjOd9cOx6+JmosxTTRkuBUuh0w==
+X-Google-Smtp-Source: AGHT+IEVRNtpn2tlVFv7TXjhHhOtmBTC4HU7zH5uPw5lEXbu5y4CMZRA6TbzQfENSS9jbX4xtYdMmldX0lDmyI8S7DU=
+X-Received: by 2002:a17:906:e08f:b0:a52:3d34:bde1 with SMTP id
+ gh15-20020a170906e08f00b00a523d34bde1mr824802ejb.1.1712936424556; Fri, 12 Apr
+ 2024 08:40:24 -0700 (PDT)
+MIME-Version: 1.0
+From: =?UTF-8?B?7JiB6riw?= <ghostyak@gmail.com>
+Date: Sat, 13 Apr 2024 00:40:13 +0900
+Message-ID: <CAHZXzbzJwV0DCwmUEeknd7X0jqJBCeYW3dkJap-B6Uvg3DdVng@mail.gmail.com>
+Subject: =?UTF-8?B?7KeA66mU7J287JeQ7IScIOuztOuCuOuLpC4=?=
+To: ghostyak@daum.net
+Content-Type: multipart/alternative; boundary="0000000000001bd2070615e81778"
+
+--0000000000001bd2070615e81778
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+64uk7J2M7Jy866GcDQo=
+--0000000000001bd2070615e81778
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+PGRpdiBkaXI9Imx0ciI+64uk7J2M7Jy866GcPC9kaXY+DQo=
+--0000000000001bd2070615e81778--
