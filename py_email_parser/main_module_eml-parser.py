@@ -7,9 +7,11 @@ import ipaddress
 import socket
 import datetime
 from functools import lru_cache
-import subprocess
+from datetime import datetime
 
-filepath = os.path.join(os.getcwd(), 'c.eml')
+abspath = os.path.abspath(__file__)
+dirname = os.path.dirname(abspath)
+filepath = os.path.join(dirname, 'b.eml')
 
 def nslookup(ip_address):
     try:
@@ -23,9 +25,7 @@ def ip_to_domain(ip):
     try:
         if is_private_ip(ip) is True:
             return None
-
         domain = nslookup(ip)
-        # domain = socket.gethostbyaddr(ip)
         return domain
     except socket.herror:
         return None
@@ -101,42 +101,83 @@ def json_serial(obj):
     if isinstance(obj, datetime.datetime):
         return obj.isoformat()
 
+def serialize_datetime(obj):
+    if isinstance(obj, datetime):
+        return obj.strftime('%Y-%m-%d %H:%M:%S')
+    raise TypeError(f'Object of type {type(obj)} is not JSON serializable')
+
+def print_all_parsed_eml(parsed_eml):
+    print(json.dumps(parsed_eml, default=serialize_datetime, indent=4))
 
 
-with open(filepath, 'rb') as fhdl:
-    raw_email = fhdl.read()
+def analyze_sender_ip(parsed_eml):
+    sender_ip = {}
+    if 'x-originating-ip' in parsed_eml['header']['header']:
+        sender_ip['x-originating-ip'] = []
+        for ip_str in parsed_eml['header']['header']['x-originating-ip']: 
+            ip_str = ip_str.replace('[','').replace(']','')
+            sender_ip['x-originating-ip'].append(ip_str)
+            # print('발신지IP: ' + ip_str + get_tag(ip_str))
 
-ep = eml_parser.EmlParser(include_raw_body=True, include_attachment_data=True)
+    if 'x-hanmail-peer-ip' in parsed_eml['header']['header']:
+        sender_ip['x-hanmail-peer-ip'] = []
+        for ip_str in parsed_eml['header']['header']['x-hanmail-peer-ip']: 
+            sender_ip['x-hanmail-peer-ip'].append(ip_str)
+            # print('발신지IP: ' + ip_str + get_tag(ip_str))
+            # sender_ip.append(['x-hanmail-peer-ip', ip_str])
 
-parsed_eml = ep.decode_email_bytes(raw_email)
+    if 'received_ip' in parsed_eml['header']:
+        sender_ip['received_ip'] = []
+        for ip_str in parsed_eml['header']['received_ip']:
+            if is_valid_ipv4(ip_str) or is_valid_ipv6(ip_str):
+                sender_ip['received_ip'].append(ip_str)
+                # print('경유지IP: ' + ip_str + get_tag(ip_str))
+                # sender_ip.append('received_ip', ip_str)
+                # sender_ip.append(['received_ip', ip_str])
+
+    return sender_ip
 
 
-# 이메일 본문을 출력합니다.
-print(parsed_eml['body'][0]['content'])
+def analyze_attachment(parsed_eml):
+    attachment = []
+    if 'attachment' in parsed_eml:
+        for file in parsed_eml['attachment']:
+            item = {}
+            item['filename'] = file['filename']
+            item['hash'] = file['hash']
+            attachment.append(item)
+            # print(f'attachment: ' + file['filename'] + f" (md5: {file['hash']['md5']})")
+    return attachment
 
-# print("첨부 파일:")
+if __name__ == "__main__":
 
-for file in parsed_eml.get('attachment', []):
-    print(f'attachment: ' + file['filename'] + f" (md5: {file['hash']['md5']})")
+    with open(filepath, 'rb') as fhdl:
+        raw_email = fhdl.read()
 
-# if 'attachment' in parsed_eml:
-#     for file in parsed_eml['attachment']:
-#         print(f'attachment: ' + file['filename'] + f" (md5: {file['hash']['md5']})")
+    ep = eml_parser.EmlParser(include_raw_body=True, include_attachment_data=True)
+    # ep = eml_parser.EmlParser(include_raw_body=True)
 
-if 'x-originating-ip' in parsed_eml['header']['header']:
-    for ip_str in parsed_eml['header']['header']['x-originating-ip']: 
-        ip_str = ip_str.replace('[','').replace(']','')
-        print('발신지IP: ' + ip_str + get_tag(ip_str))
+    parsed_eml = ep.decode_email_bytes(raw_email)
 
-if 'x-hanmail-peer-ip' in parsed_eml['header']['header']:
-    for ip_str in parsed_eml['header']['header']['x-hanmail-peer-ip']: 
-        print('발신지IP: ' + ip_str + get_tag(ip_str))
 
-if 'received_ip' in parsed_eml['header']:
-    for ip_str in parsed_eml['header']['received_ip']:
-        if is_valid_ipv4(ip_str) or is_valid_ipv6(ip_str):
-            print('경유지IP: ' + ip_str + get_tag(ip_str))
-# print()
+    # 이메일 본문을 출력합니다.
+    # print(parsed_eml['body'][0]['content'])
+
+    # print("첨부 파일:")
+
+    # for file in parsed_eml.get('attachment', []):
+    # print(f'attachment: ' + file['filename'] + f" (md5: {file['hash']['md5']})")
+
+    analyze = {}
+    sender_ip = analyze_sender_ip(parsed_eml)
+    attachment = analyze_attachment(parsed_eml)
+    analyze['ip'] = sender_ip
+    analyze['attachment'] = attachment
+    print(json.dumps(analyze, indent=4))
+    # print(sender_ip)
+
+
+    
 
 # print("헤더:")
 # print(parsed_eml['header'])
