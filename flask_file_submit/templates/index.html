@@ -8,69 +8,29 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
-        body {
-            background-color: #1c1c1c;
-            color: #f5f5f5;
-        }
 
-        .container {
-            max-width: 800px;
-            margin-top: 50px;
-        }
-
-        .nav-link {
-            color: #999;
-            font-weight: 500;
-        }
-
-        .nav-link.active {
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
-        }
-
-        .form-control-file {
-            border: 1px solid #4d4d4d;
-            padding: 0.375rem 0.75rem;
-            border-radius: 0.25rem;
-            background-color: #2c2c2c;
-            color: #f5f5f5;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004c9a;
-        }
-
-        .progress-bar {
-            background-color: #007bff;
-        }
-
-        .alert {
-            background-color: #2c2c2c;
-            border-color: #4d4d4d;
-            color: #f5f5f5;
-        }
     </style>
 
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-sm" style="width:720px;">
         <center>
-            <div class="fs-1 fw-bold font-monospace mb-5 mt-5 pt-5 pb-5">
+
+            <div class="container-sm fw-bold font-monospace mt-5 mb-5 pt-5 pb-5">
                 <a href="/" class="text-body text-decoration-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
-                        class="bi bi-envelope" viewBox="0 0 16 16" style="margin-right:20px;">
+                        class="bi bi-envelope" viewBox="0 0 16 16" style="margin-right:20px; vertical-align: middle;">
                         <path
                             d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z">
                         </path>
                     </svg>
-                    Criminal Email
+
+                    <span style="margin-right:20px; vertical-align: middle;">
+                        <font size='25'>Criminal Email</font>
+                    </span>
+
+
                 </a>
             </div>
         </center>
@@ -98,20 +58,11 @@
                             <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;"
                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
                         </div>
-                        <div class="alert alert-danger" id="error-message" style="display: none;"></div>
-                        {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                        {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
-                        {% endfor %}
-                        {% endif %}
-                        {% endwith %}
-                        {{ form.hidden_tag() }}
                         <center>
                             <div class="mt-5 mb-5">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
                                     fill="currentColor" stroke="#808080" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-file-text">
+                                    stroke-linejoin="round" class="feather feather-file-text mt-5 mb-3">
                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                     <polyline points="14 2 14 8 20 8"></polyline>
                                     <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -120,19 +71,59 @@
                                 </svg>
 
                                 <div class="form-group mt-3">
-                                    {{ form.file(class_='form-control-file') }}
+                                    <div class="alert alert-warning" id="error-message" style="display: none;"></div>
+                                    {% with messages = get_flashed_messages(with_categories=true) %}
+                                    {% if messages %}
+                                    {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endwith %}
+                                    {{ form.hidden_tag() }}
+
+
+                                    <div class="container-sm text-center">
+                                        <div class="row">
+                                            <div class="col-1">
+
+                                            </div>
+                                            <div class="col">
+                                                <div class="input-group">
+                                                    {{ form.file(class_='form-control col', accept='.eml') }}
+                                                    {{ form.submit(class_="btn btn-outline-secondary") }}
+                                                </div>
+                                            </div>
+                                            <div class="col-1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
-                                <p>여기에 .EML 파일을 끌어놓으세요.</p>
                                 </br>
-                                <button id="selectFileBtn" class="btn btn-primary">선택</button>
+
+                                <p class="mt-5">
+                                    위의 데이터를 제출함으로써 귀하의 샘플을 보안 커뮤니티와 공유하는 데 동의하게 됩니다.
+                                    개인 정보를 제출하지 마십시오.
+                                    Criminal Email은 귀하가 제출한 내용에 대해 책임을 지지 않습니다.
+                                </p>
                             </div>
                         </center>
                     </form>
                 </div>
+
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
-                tabindex="0">Profile</div>
-            <div style="border-top: 1px solid #333; width: 100%;"></div>
+                tabindex="0">
+                <div class="input-group mt-5 mb-3">
+                    <input type="text" class="form-control" placeholder="name@address.com,  address.com,  8.8.8.8" aria-label="Recipient's username"
+                        aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+                </div>
+            </div>
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -142,7 +133,7 @@
         const selectFileBtn = document.getElementById('selectFileBtn');
         const fileInput = document.querySelector('input[type="file"]');
         const progressBar = document.getElementById('progressBarContainer');
-        fileInput.style.display = "none";
+
         progressBar.style.display = "none";
         const errorMessageDiv = document.getElementById('error-message');
 
@@ -154,18 +145,25 @@
             const file = fileInput.files[0];
             const fileSize = file.size;
             const maxFileSize = 20 * 1024 * 1024; // 20MB
+            const extension = fileName.substring(fileName.lastIndexOf('.') + 1);
+
+            alert(maxFileSize);
+            if (extension != 'eml') {
+                errorMessageDiv.textContent = 'eml 파일만 업로드 할 수 있습니다.';
+                errorMessageDiv.style.display = 'block';
+
+            }
 
             if (fileSize > maxFileSize) {
                 errorMessageDiv.textContent = '파일 크기는 20MB를 초과할 수 없습니다.';
                 errorMessageDiv.style.display = 'block';
-                fileInput.value = '';
-                fileInput.files = null;
-            } else {
-                errorMessageDiv.style.display = 'none';
-                document.getElementById('uploadForm').submit();
+                fileInput.value = null;
             }
-        });
+            // return;
+            // errorMessageDiv.style.display = 'none';
+            // document.getElementById('uploadForm').submit();
 
+        });
     </script>
 </body>
 

@@ -41,7 +41,8 @@ def index():
                 # 파일 업로드 실패: BAD REQUEST 라고 출력된다.
                 # 용량 제한은 1차로 클라이언트 javascript에서 거르고, 2차로 서버에서 거른다.
                 # 서버에 20MB보다 큰 자료가 업로드됐다면 명백한 정책 위반이다.
-                return jsonify({'flash': '파일 크기는 20MB를 초과할 수 없습니다. - server'}), 200
+                flash('파일 크기는 20MB를 초과할 수 없습니다.', 'warning')
+                return render_template('index.html', form=form)
             else:
                 handle_file_upload(file)
                 # return jsonify({'redirect': url_for('complete')})
