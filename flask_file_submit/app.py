@@ -44,7 +44,8 @@ def index():
                 return jsonify({'flash': '파일 크기는 20MB를 초과할 수 없습니다. - server'}), 200
             else:
                 handle_file_upload(file)
-                return jsonify({'redirect': url_for('complete')})
+                # return jsonify({'redirect': url_for('complete')})
+                return redirect(url_for('complete'))
             
     return render_template('index.html', form=form)
 
