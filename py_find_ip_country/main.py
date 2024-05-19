@@ -61,7 +61,7 @@ def extract_ip_countries(filename):
     ip_pattern = r'\b(?:\d{1,3}\.){3}\d{1,3}\b'
     reader = geoip2.database.Reader('GeoLite2-Country.mmdb')
 
-    with open(filename, 'r') as file:
+    with open(filename, 'r', encoding='utf-8') as file:
         data = file.read()
 
     data = remove_brackets_from_ip(data)
